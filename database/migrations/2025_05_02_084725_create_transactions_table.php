@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->enum('transaction_type', ['discount', 'deposit', 'payment', 'credit', 'refund']);
+            $table->string('transaction_type');
             $table->decimal('amount', 10, 2);
             $table->string('reference')->nullable();
             $table->decimal('balance_after', 10, 2)->nullable();
