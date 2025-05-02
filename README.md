@@ -9,6 +9,8 @@
 ``` git clone https://github.com/kusman28/simple_transaction.git ```
 
 - cd simple_transaction
+
+``` cp .env.example .env ```
 - Set the ENV variables for database config
 
 ``` composer install ```
