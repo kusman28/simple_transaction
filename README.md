@@ -13,13 +13,17 @@
 ``` cp .env.example .env ```
 - Set the ENV variables for database config
 
-``` composer install ```
+```composer install```
 
-``` npm install ```
+```npm install```
 
-``` php artisan migrate --seed ```
+```npm run dev```
 
-``` php artisan serve ```
+```php artisan migrate --seed```
+
+```php artisan key:generate```
+
+```php artisan serve```
 
 ## Credentials
 - email ```johndoe@example.com```
