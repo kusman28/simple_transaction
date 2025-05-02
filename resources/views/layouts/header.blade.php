@@ -8,15 +8,24 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body>
-    <div class="container mx-auto p-20 w-300">
-        <div class="flex justify-between items-center mb-4">
-            <h1 class="text-3xl">Transaction</h1>
-            @if (request()->routeIs('transaction.create'))
-                <a href="{{ route('transaction.index') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg">View Transactions</a>
-            @else
-                <a href="{{ route('transaction.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Create Transaction</a>
-            @endif
-        </div>
+    <div class="container mx-auto p-2">
+        @if (Request::route()->getName() != 'transaction.show')
+            <div class="p-5 float-end">
+                @if (!session()->get('create_mode'))
+                    <form action="{{ route('transaction.create') }}" method="PUT" class="inline-block">
+                        @csrf
+                        <button type="submit" class="text-blue-400 underline text-2xl">Create Transaction</button>
+                    </form>
+                @else 
+                    <form action="{{ route('transaction.view-transaction') }}" method="POST" class="inline-block">
+                        @csrf
+                        <button type="submit" class="text-blue-400 underline text-2xl">View Transaction</button>
+                    </form>
+                @endif
+            </div>
+        @endif
+        
+        @yield('content')
     </div>
 </body>
 </html>

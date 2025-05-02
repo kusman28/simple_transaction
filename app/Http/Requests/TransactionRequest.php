@@ -29,8 +29,8 @@ class TransactionRequest extends FormRequest
                 Rule::in(array_column(TransactionTypes::types(), 'value')),
             ],
             'amount' => ['required', 'numeric', 'min:0'],
-            // 'reference' => ['required', 'string', 'max:255'],
-            // 'balance_after' => ['required', 'numeric', 'min:0'],
+            'reference' => ['required', 'string', 'max:255'],
+            'balance_after' => ['numeric'],
         ];
     }
 }

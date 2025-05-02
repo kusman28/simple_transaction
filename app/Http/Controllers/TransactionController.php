@@ -1,47 +1,73 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
+
 
 use App\Http\Requests\TransactionRequest;
 use App\Models\Transaction;
-use Illuminate\Http\Request;
+use App\Services\TransactionService;
+use Illuminate\Support\Facades\Session;
 
 class TransactionController extends Controller
 {
+    public function __construct(
+        private TransactionService $transactionService
+    ) {
+    }
+
     public function index()
     {
-        return view('transaction.index');
+        $transactions = Transaction::all()->sortByDesc('created_at');
+
+        return view('transaction.index')->with('transactions', $transactions);
     }
 
     public function create()
     {
-        return view('transaction.create');
+        Session::put('create_mode', true);
+        return redirect()->to('/dashboard');
     }
 
     public function store(TransactionRequest $request)
     {
-        Transaction::create($request->validated());
+        $validatedData = $request->validated();
+        $previousBalance = auth()->user()->balance;
 
-        return redirect()->route('transaction.index')->with('success', 'Transaction created successfully.');
+        $this->transactionService->createTransaction($validatedData, $previousBalance);
+
+        return redirect()->to('/dashboard')->with('success', 'Transaction created successfully.');
     }
 
     public function show($id)
     {
-        // Show a specific transaction
+        $transaction = Transaction::findOrFail($id);
+
+        return view('transaction.show', compact('transaction'));
     }
 
-    public function edit($id)
+    public function update($id, TransactionRequest $request)
     {
-        // Edit a specific transaction
-    }
+        $validatedData = $request->validated();
+        $previousBalance = auth()->user()->balance;
 
-    public function update(Request $request, $id)
-    {
-        // Update the transaction
+        $this->transactionService->updateTransaction($id, $validatedData, $previousBalance);
+
+        return redirect()->to('/dashboard')->with('success', 'Transaction updated successfully.');
     }
 
     public function destroy($id)
     {
-        // Delete the transaction
+        $transaction = Transaction::findOrFail($id);
+        $transaction->delete();
+
+        return redirect()->to('/dashboard')->with('success', 'Transaction deleted successfully.');
+    }
+
+    public function view()
+    {
+        Session::put('create_mode', false);
+        return redirect()->to('/dashboard');
     }
 }
