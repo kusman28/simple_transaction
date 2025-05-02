@@ -4,11 +4,22 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-final class TransactionTypes
+enum TransactionTypes: string
 {
-    public const DISCOUNT = 'discount';
-    public const DEPOSIT = 'deposit';
-    public const PAYMENT = 'payment';
-    public const CREDIT = 'credit';
-    public const REFUND = 'refund';
+    case DEPOSIT = 'deposit';
+    case WITHDRAWAL = 'withdrawal';
+    case TRANSFER = 'transfer';
+    case PAYMENT = 'payment';
+    case REFUND = 'refund';
+
+    public static function types(): array
+    {
+        return [
+            self::DEPOSIT,
+            self::WITHDRAWAL,
+            self::TRANSFER,
+            self::PAYMENT,
+            self::REFUND,
+        ];
+    }
 }
