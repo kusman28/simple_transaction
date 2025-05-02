@@ -19,6 +19,8 @@
 
 ``` php artisan migrate --seed ```
 
+``` php artisan serve ```
+
 ## Credentials
 - email ```johndoe@example.com```
 - password ```password@2025```
