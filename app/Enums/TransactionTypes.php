@@ -6,19 +6,19 @@ namespace App\Enums;
 
 enum TransactionTypes: string
 {
+    case DISCOUNT = 'discount';
     case DEPOSIT = 'deposit';
-    case WITHDRAWAL = 'withdrawal';
-    case TRANSFER = 'transfer';
     case PAYMENT = 'payment';
+    case CREDIT = 'credit';
     case REFUND = 'refund';
 
     public static function types(): array
     {
         return [
+            self::DISCOUNT,
             self::DEPOSIT,
-            self::WITHDRAWAL,
-            self::TRANSFER,
             self::PAYMENT,
+            self::CREDIT,
             self::REFUND,
         ];
     }
